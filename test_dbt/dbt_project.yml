@@ -2,18 +2,26 @@ name: test_dbt
 version: 1.0.0
 config-version: 2
 profile: test_dbt
-model-paths:
-  - models
-analysis-paths:
-  - analyses
-test-paths:
-  - tests
-seed-paths:
-  - seeds
-macro-paths:
-  - macros
-snapshot-paths:
-  - snapshots
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
 models:
   test_dbt:
+    # まず全体のデフォルト（必要なら残す）
     +materialized: view
+
+    # メダリオン別に出力先スキーマを分ける
+    bronze:
+      +schema: BRONZE
+      +materialized: view   # bronzeはviewにしたいなら
+    silver:
+      +schema: SILVER
+      +materialized: table  # silverはtableにしたいなら
+    gold:
+      +schema: GOLD
+      +materialized: table  # goldはtableにしたいなら
