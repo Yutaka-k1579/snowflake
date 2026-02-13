@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: slv_my_second_dbt_model
+    description: "Silver層：id=1 に絞ったデータ"
+    columns:
+      - name: id
+        description: "ID（1のみを想定）"
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: [1]
